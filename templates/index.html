@@ -1,0 +1,33 @@
+<!-- File: templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Forecast</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input[type=text] { padding: 8px; width: 300px; }
+        input[type=submit] { padding: 8px 20px; }
+        .result { margin-top: 30px; }
+        img { margin-top: 20px; width: 600px; }
+    </style>
+</head>
+<body>
+    <h1>One-Day Stock Forecast</h1>
+    <form method="POST">
+        <input type="text" name="ticker" placeholder="Enter Ticker Symbol" required>
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        <h2>Results:</h2>
+        <p><strong>Latest Close Price:</strong> {{ prediction.latest }}</p>
+        <p><strong>XGBoost Prediction:</strong> {{ prediction.xgb }}</p>
+        <p><strong>LSTM Prediction:</strong> {{ prediction.lstm }}</p>
+        {% if plot_path %}
+        <img src="/{{ plot_path }}" alt="Stock Trend">
+        {% endif %}
+    </div>
+    {% endif %}
+</body>
+</html>
